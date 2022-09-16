@@ -14,15 +14,16 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-/**
- * Version details
- *
- * @package    local_alias
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
-
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2022090903;        // The current plugin version (Date: 2022090900).
-$plugin->requires  = 2022041200;        // Requires this Moodle version.
-$plugin->component = 'local_alias';       // Full name of the plugin (used for diagnostics).
+$functions = array(
+    'local_alias_delete_alias' => array(
+        'classname'   => 'local_alias_external',
+        'methodname'  => 'delete_alias',
+        'classpath'   => 'local/alias/externallib.php',
+        'description' => 'Delete an alias.',
+        'type'        => 'write',
+        'ajax' => true,
+        'capabilities' => '',
+    ),
+);

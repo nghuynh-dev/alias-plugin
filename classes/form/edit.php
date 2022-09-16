@@ -13,7 +13,6 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
-
 /**
  * Version details
  *
@@ -23,10 +22,11 @@
 namespace local_alias\form;
 use moodleform;
 
+defined('MOODLE_INTERNAL') || die();
+
 require_once("$CFG->libdir/formslib.php");
 
 class edit extends moodleform {
-    //Add elements to form
     public function definition() {
         global $CFG;
 
@@ -38,15 +38,17 @@ class edit extends moodleform {
         $mform->addElement('text', 'friendly', get_string('friendly', 'local_alias'));
         $mform->setType('friendly', PARAM_NOTAGS);
         $mform->setDefault('friendly', '');
+        $mform->addRule('friendly', get_string('defaultfriendly', 'local_alias'), 'required', null, 'client');
 
         $mform->addElement('text', 'destination', get_string('destination', 'local_alias'));
         $mform->setType('destination', PARAM_NOTAGS);
         $mform->setDefault('destination', '');
+        $mform->addRule('destination', get_string('defaultdestination', 'local_alias'), 'required', null, 'client');
 
         $this->add_action_buttons();
     }
-    //Custom validation should be added here
-    function validation($data, $files) {
+
+    public function validation($data, $files) {
         return array();
     }
 }

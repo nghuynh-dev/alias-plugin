@@ -29,14 +29,20 @@
 
 defined('MOODLE_INTERNAL') || die();
 
+$string['pluginname'] = 'Manage Aliases';
 $string['managealias'] = 'Manage Alias';
 $string['friendly'] = 'Friendly';
 $string['destination'] = 'Destination';
 $string['defaultfriendly'] = 'Please enter friendly';
 $string['defaultdestination'] = 'Please enter destination';
 $string['messagecancelled'] = 'You cancelled the alias form!';
-$string['messagecreated'] = 'You created the alias form with Friendly';
-$string['messagecreated'] = 'You updated the alias form with Friendly';
-
-
-
+$string['messagecreated'] = 'You created the alias with Friendly field';
+$string['messageupdated'] = 'You updated the alias with Friendly field';
+$string['messagefilter'] = 'You filtered the alias with a Friendly field';
+$string['modaldeletetitle'] = 'You created the alias form with Friendly';
+$string['messagefilter'] = ' has just been filtered';
+$string['messagedeletefail'] = 'Delete fail!';
+$string['alias:managealias'] = 'Manage Alias';
+$string['filterfriendly'] = 'Filter Friendly';
+$string['filter'] = 'Go';
+$string['editalias'] = 'Edit Alias';

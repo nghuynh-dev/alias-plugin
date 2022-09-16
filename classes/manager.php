@@ -21,17 +21,29 @@
  */
 namespace local_alias;
 use dml_exception;
+use dml_transaction_exception;
 use stdClass;
 
 class manager {
     /**
+     * @param int $page
      * @return array
      */
-    public function get_alias_list(): array
-    {
+    public function get_alias_list(int $page, int $perpage, string $query): array {
         global $DB;
+        $select = $DB->sql_like('friendly', ':friendly');
+        $params = ['friendly' => '%'.$DB->sql_like_escape($query).'%'];
+        $count = $DB->count_records_select('alias', $select, $params);
+        $sql = "SELECT *
+                  FROM {alias} a
+                 WHERE $select
+              ORDER BY a.id DESC";
+        $result = $DB->get_records_sql($sql, $params, $page * $perpage, $perpage);
         try {
-            return $DB->get_records('alias');
+            return [
+                'result' => $result,
+                'count' => $count
+            ];
         } catch (dml_exception $e) {
             return [];
         }
@@ -47,14 +59,12 @@ class manager {
         $recordtoinsert = new stdClass();
         $recordtoinsert->friendly = $friendly;
         $recordtoinsert->destination = $destination;
-
         try {
             return $DB->insert_record('alias', $recordtoinsert, false);
         } catch (dml_exception $e) {
             return false;
         }
     }
-
     /**
      * @param int $id
      * @return false|mixed|stdClass
@@ -65,7 +75,29 @@ class manager {
         return $DB->get_record('alias', ['id' => $id]);
     }
 
-    public function update_alias($id, $friendly, $destination)
-    {
+    /**
+     * @throws dml_exception
+     */
+    public function update_alias(int $id, string $friendly, string $destination): bool {
+        global $DB;
+        $obj = new stdClass();
+        $obj->id = $id;
+        $obj->friendly = $friendly;
+        $obj->destination = $destination;
+        return $DB->update_record('alias', $obj);
+    }
+
+    /**
+     * @throws dml_transaction_exception
+     * @throws dml_exception
+     */
+    public function delete_alias($aliasid): bool {
+        global $DB;
+        $transaction = $DB->start_delegated_transaction();
+        $deletealias = $DB->delete_records('alias', ['id' => $aliasid]);
+        if ($deletealias) {
+            $DB->commit_delegated_transaction($transaction);
+        }
+        return true;
     }
 }

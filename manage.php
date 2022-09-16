@@ -19,34 +19,52 @@
  *
  * @package    local_alias
  */
+
+use local_alias\form\filter;
 use local_alias\manager;
 require_once(__DIR__ . '/../../config.php');
+
 global $DB;
+$context = context_system::instance();
+$page = optional_param('page', 0, PARAM_INT);
+$aliasid = optional_param('id', null, PARAM_INT);
+$perpage = 3;
+$query = optional_param('query', '', PARAM_NOTAGS);
+$baseurl = new moodle_url('/local/alias/manage.php', ['page' => $page, 'query' => $query]);
+
+require_login();
+require_capability('local/alias:managealias', $context);
 
 $PAGE->set_url(new moodle_url('/local/alias/manage.php'));
 $PAGE->set_context(\context_system::instance());
 $PAGE->set_title(get_string('managealias', 'local_alias'));
-//$PAGE->set_heading(get_string('managealias', 'local_alias'));
+$PAGE->requires->js_call_amd('local_alias/confirm', 'init');
+$PAGE->requires->css('/local/alias/style/style.css');
+$mform = new filter();
+if ($mform->is_cancelled()) {
+    redirect($CFG->wwwroot . '/local/alias/manage.php', get_string('messagecancelled', 'local_alias'));
+} else if ($fromform = $mform->get_data()) {
+    if ($fromform->query) {
+        redirect($CFG->wwwroot . "/local/alias/manage.php?query=$fromform->query",
+            "$fromform->query" . get_string('messagefilter', 'local_alias'));
+    }
+}
+if ($query !== '') {
+    $mform->set_data(['query' => $query]);
+}
 
 $manager = new manager();
-$alias = $manager->get_alias_list();
-
-echo $OUTPUT->header();
+$alias = $manager->get_alias_list($page, $perpage, $query);
+$paginate = $OUTPUT->paging_bar($alias['count'], $page, $perpage, $baseurl);
 
 $templatecontext = (object)[
-    'alias' => array_values($alias),
-    'editurl' => new moodle_url('/local/alias/edit.php')
+    'alias' => array_values($alias['result']),
+    'editurl' => new moodle_url('/local/alias/edit.php'),
+    "form" => $mform->render(),
+    'count' => $alias['count'],
+    'paginate' => $paginate
 ];
-
+echo $OUTPUT->header();
 echo $OUTPUT->render_from_template('local_alias/manage', $templatecontext);
 echo $OUTPUT->footer();
-
-//1	http://localhost/home 	http://localhost/course.php?id=1
-//2	http://localhost/education	http://localhost/course.php?id=2
-//3	http://localhost/sports	http://localhost/course.php?id=3
-//4	http://localhost/money	http://localhost/course.php?id=4
-//5	http://localhost/about	http://localhost/course.php?id=5
-//6	http://localhost/study	http://localhost/course.php?id=6
-//7	http://localhost/learning	http://localhost/course.php?id=7
-//8	http://localhost/mathematics-education 	http://localhost/course.php?id=8
 

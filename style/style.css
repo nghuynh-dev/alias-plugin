@@ -1,0 +1,17 @@
+body {
+    font-family: 'Nunito', sans-serif;
+}
+.mform {
+    display: flex;
+    align-items: center;
+}
+.form-group {
+    align-items: center;
+}
+.word-break {
+    width: 180px;
+}
+#id_submitbutton {
+    position: relative;
+    left: -90px;
+}
