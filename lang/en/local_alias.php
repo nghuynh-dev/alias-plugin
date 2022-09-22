@@ -24,7 +24,6 @@
  * list of strings defined in /install/stringnames.txt.
  *
  * @package   local_alias
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
@@ -46,3 +45,13 @@ $string['alias:managealias'] = 'Manage Alias';
 $string['filterfriendly'] = 'Filter Friendly';
 $string['filter'] = 'Go';
 $string['editalias'] = 'Edit Alias';
+$string['errorgetlist'] = 'Error to get list';
+$string['confirmdelete'] = 'Do you want to delete alias?';
+$string['confirm'] = 'Confirm';
+$string['welcome'] = 'Welcome to Manage Alias';
+$string['number'] = 'Number of Aliases available: ';
+$string['action'] = 'Actions';
+$string['edit'] = 'Edit';
+$string['delete'] = 'Delete';
+
+

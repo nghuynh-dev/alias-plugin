@@ -33,23 +33,23 @@
                 </button>
             </div>
             <div class="modal-body">
-                Do you want to delete alias?
+                {{#str}}confirmdelete, local_alias{{/str}}
             </div>
             <div class="modal-footer">
-                <button type="button" class="confirm-delete-alias btn btn-primary">Confirm</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="confirm-delete-alias btn btn-primary">{{#str}}confirm, local_alias{{/str}}</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">{{#str}}delete, local_alias{{/str}}</button>
             </div>
         </div>
     </div>
 </div>
 <div class="row">
     <div class="col-12 pb-5">
-        <h1>Welcome to Manage Alias</h1>
+        <h1>{{#str}}welcome, local_alias{{/str}}</h1>
     </div>
 </div>
 <div class="row">
     <div class="col-12 pb-4">
-        <h4>Number of Aliases available: {{count}}</h4>
+        <h4>{{#str}}number, local_alias{{/str}}{{count}}</h4>
     </div>
 </div>
 <div class="row">
@@ -62,9 +62,9 @@
         <table class="table table-striped table-hover">
             <thead>
             <tr>
-                <th scope="col">Friendly</th>
-                <th scope="col">Destination</th>
-                <th scope="col">Actions</th>
+                <th scope="col">{{#str}}friendly, local_alias{{/str}}</th>
+                <th scope="col">{{#str}}destination, local_alias{{/str}}</th>
+                <th scope="col">{{#str}}action, local_alias{{/str}}</th>
             </tr>
             </thead>
             <tbody>
@@ -74,10 +74,10 @@
                     <td>{{destination}}</td>
                     <td>
                         <button type="button" class="btn btn-primary" onclick="location.href='{{editurl}}?id={{id}}'">
-                            Edit
+                            {{#str}}edit, local_alias{{/str}}
                         </button>
                         <button type="button" data-toggle="modal" class="aliasid{{id}} alias-delete-btn btn btn-danger" data-target="#aliasModal">
-                            Delete
+                            {{#str}}delete, local_alias{{/str}}
                         </button>
                     </td>
                 </tr>

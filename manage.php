@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Version details
+ * Manage alias page
  *
  * @package    local_alias
  */
@@ -29,7 +29,7 @@ $context = context_system::instance();
 $page = optional_param('page', 0, PARAM_INT);
 $aliasid = optional_param('id', null, PARAM_INT);
 $perpage = 3;
-$query = optional_param('query', '', PARAM_NOTAGS);
+$query = optional_param('query', '', PARAM_TEXT);
 $baseurl = new moodle_url('/local/alias/manage.php', ['page' => $page, 'query' => $query]);
 
 require_login();
@@ -60,7 +60,7 @@ $paginate = $OUTPUT->paging_bar($alias['count'], $page, $perpage, $baseurl);
 $templatecontext = (object)[
     'alias' => array_values($alias['result']),
     'editurl' => new moodle_url('/local/alias/edit.php'),
-    "form" => $mform->render(),
+    'form' => $mform->render(),
     'count' => $alias['count'],
     'paginate' => $paginate
 ];

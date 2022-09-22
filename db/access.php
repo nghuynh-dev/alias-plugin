@@ -13,7 +13,9 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
-
+/**
+ * Capability for manager role
+ */
 defined('MOODLE_INTERNAL') || die();
 
 $capabilities = [

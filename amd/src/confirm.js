@@ -15,8 +15,10 @@
 
 
 /**
- * @module local_alias
+ * Js confirm delete alias
+ *
  */
+
 import * as Str from 'core/str';
 import Ajax from 'core/ajax';
 import Notification from 'core/notification';

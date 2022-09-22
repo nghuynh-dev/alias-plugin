@@ -14,10 +14,9 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 /**
- * Version details
+ * Create filter alias form
  *
  * @package    local_alias
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 namespace local_alias\form;
 use moodleform;
@@ -28,9 +27,9 @@ require_once("$CFG->libdir/formslib.php");
 
 class filter extends moodleform {
     public function definition() {
-        $mform = $this->_form; // Don't forget the underscore!
+        $mform = $this->_form;
         $mform->addElement('text', 'query', get_string('filterfriendly', 'local_alias'));
-        $mform->setType('query', PARAM_NOTAGS);
+        $mform->setType('query', PARAM_TEXT);
         $this->add_action_buttons(false, get_string('filter', 'local_alias'));
     }
     public function validation($data, $files) {

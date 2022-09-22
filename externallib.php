@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Version details
+ * External function to delete alias.
  *
  * @package    local_alias
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -28,19 +28,21 @@ require_once($CFG->libdir . "/externallib.php");
 class local_alias_external extends external_api {
     /**
      * Return desc of method params
+     *
      * @return external_function_parameters
      */
-    public static function delete_alias_parameters() {
+    public static function delete_alias_parameters(): external_function_parameters {
         return new external_function_parameters(
             ['aliasid' => new external_value(PARAM_INT, 'id of alias')],
         );
     }
     /**
      * itself
+     *
      * @param $aliasid
      * @return string
      * @throws invalid_parameter_exception
-     * @throws required_capability_exception
+     * @throws required_capability_exception|dml_exception
      */
     public static function delete_alias($aliasid): string {
         $params = self::validate_parameters(self::delete_alias_parameters(), array('aliasid' => $aliasid));
@@ -51,9 +53,10 @@ class local_alias_external extends external_api {
     }
     /**
      * Return desc of method result value
+     *
      * @return external_value
      */
-    public static function delete_alias_returns() {
+    public static function delete_alias_returns(): external_value {
         return new external_value(PARAM_BOOL, 'True if the alias was successfully deleted.');
     }
 }

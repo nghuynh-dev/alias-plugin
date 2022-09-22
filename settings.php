@@ -14,6 +14,12 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
+/**
+ * Setting plugin
+ *
+ * @package    local_alias
+ */
+
 defined('MOODLE_INTERNAL') || die();
 
 $ADMIN->add('localplugins', new admin_externalpage('local_alias', get_string('managealias', 'local_alias'),

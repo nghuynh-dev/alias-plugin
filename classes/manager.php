@@ -26,9 +26,15 @@ use stdClass;
 
 class manager {
     /**
+     * Function get alias's list
+     *
      * @param int $page
+     * @param int $perpage
+     * @param string $query
      * @return array
+     * @throws dml_exception
      */
+
     public function get_alias_list(int $page, int $perpage, string $query): array {
         global $DB;
         $select = $DB->sql_like('friendly', ':friendly');
@@ -45,10 +51,15 @@ class manager {
                 'count' => $count
             ];
         } catch (dml_exception $e) {
-            return [];
+            return [
+                'message' => get_string('errorgetlist', 'local_alias')
+            ];
         }
     }
+
     /**
+     * Function create new alias
+     *
      * @param string $friendly
      * @param string $destination
      * @return bool
@@ -65,7 +76,10 @@ class manager {
             return false;
         }
     }
+
     /**
+     * Function get alias by id
+     *
      * @param int $id
      * @return false|mixed|stdClass
      * @throws dml_exception
@@ -76,6 +90,12 @@ class manager {
     }
 
     /**
+     * Function update alias by id
+     *
+     * @param int $id
+     * @param string $friendly
+     * @param string $destination
+     * @return bool
      * @throws dml_exception
      */
     public function update_alias(int $id, string $friendly, string $destination): bool {
@@ -88,16 +108,14 @@ class manager {
     }
 
     /**
-     * @throws dml_transaction_exception
+     * Function delete alias by id
+     *
+     * @param $aliasid
+     * @return bool
      * @throws dml_exception
      */
     public function delete_alias($aliasid): bool {
         global $DB;
-        $transaction = $DB->start_delegated_transaction();
-        $deletealias = $DB->delete_records('alias', ['id' => $aliasid]);
-        if ($deletealias) {
-            $DB->commit_delegated_transaction($transaction);
-        }
-        return true;
+        return $DB->delete_records('alias', ['id' => $aliasid]);
     }
 }
